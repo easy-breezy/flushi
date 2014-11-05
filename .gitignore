@@ -13,5 +13,8 @@ Code/*.userprefs
 Code/*.pidb
 Code/*.booproj
 
+# Photoshop files
+Code/*.png
+
 #Unity3D Generated File On Crash Reports
 Code/sysinfo.txt

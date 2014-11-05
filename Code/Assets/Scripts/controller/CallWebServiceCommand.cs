@@ -1,4 +1,4 @@
-/// An Asynchronous Command
+﻿/// An Asynchronous Command
 /// ============================
 /// This demonstrates how to use a Command to perform an asynchronous action;
 /// for example, if you need to call a web service. The two most important lines
@@ -38,7 +38,7 @@ namespace strange.flushi.game
 			
 			//Call the service. Listen for a response
 			service.dispatcher.AddListener(ExampleEvent.FULFILL_SERVICE_REQUEST, onComplete);
-			service.Request("Click " + counter.ToString());
+			service.Request("НЕ БОМБИТ " + counter.ToString());
 		}
 		
 		//The payload is in the form of a IEvent

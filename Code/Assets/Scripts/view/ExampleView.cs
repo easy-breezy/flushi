@@ -69,6 +69,8 @@ namespace strange.flushi.game
 		internal void updateScore(string score)
 		{
 			GameObject go = Instantiate(Resources.Load("Test")) as GameObject;
+			Instantiate(Resources.Load("Explosion"));
+
 			TextMesh textMesh = go.GetComponent<TextMesh>();
 			textMesh.font.material.color = Color.white;
 			go.transform.parent = transform;
