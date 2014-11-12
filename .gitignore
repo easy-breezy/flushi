@@ -15,6 +15,9 @@ Code/*.booproj
 
 # Photoshop files
 Code/*.psd
+Code/*.psd.meta
 
 #Unity3D Generated File On Crash Reports
 Code/sysinfo.txt
+*.psd
+*.psd.meta
