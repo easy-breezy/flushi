@@ -3,6 +3,9 @@ guid: aaad880a46937ea4d80b5b86d8446c6f
 TextureImporter:
   fileIDToRecycleName:
     21300000: flushi
+    21300002: flushi_pice
+    21300004: flushi_leg
+    21300006: flushi_body
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -26,13 +29,13 @@ TextureImporter:
   maxTextureSize: 1024
   textureSettings:
     filterMode: -1
-    aniso: -1
+    aniso: 1
     mipBias: -1
-    wrapMode: -1
+    wrapMode: 1
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -43,6 +46,36 @@ TextureImporter:
   textureType: 8
   buildTargetSettings: []
   spriteSheet:
-    sprites: []
+    sprites:
+    - name: flushi_pice
+      rect:
+        serializedVersion: 2
+        x: 399
+        y: 372
+        width: 78
+        height: 77
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: flushi_leg
+      rect:
+        serializedVersion: 2
+        x: 407
+        y: 276
+        width: 67
+        height: 46
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: flushi_body
+      rect:
+        serializedVersion: 2
+        x: 6
+        y: 72
+        width: 370
+        height: 430
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 10, y: 12, z: 5, w: 8}
   spritePackingTag: 
   userData: 

@@ -14,7 +14,7 @@ Code/*.pidb
 Code/*.booproj
 
 # Photoshop files
-Code/*.png
+Code/*.psd
 
 #Unity3D Generated File On Crash Reports
 Code/sysinfo.txt
