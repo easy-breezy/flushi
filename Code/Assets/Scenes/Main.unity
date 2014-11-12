@@ -331,7 +331,6 @@ GameObject:
   - 233: {fileID: 303683701}
   - 233: {fileID: 303683700}
   - 233: {fileID: 303683699}
-  - 114: {fileID: 303683705}
   m_Layer: 0
   m_Name: sprite
   m_TagString: Untagged
@@ -470,17 +469,6 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300006, guid: aaad880a46937ea4d80b5b86d8446c6f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
---- !u!114 &303683705
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 303683697}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 60488c3d6c258ed45b475568337173a9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &314971911
 GameObject:
   m_ObjectHideFlags: 0
