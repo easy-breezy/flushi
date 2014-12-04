@@ -1,11 +1,12 @@
 fileFormatVersion: 2
-guid: aaad880a46937ea4d80b5b86d8446c6f
+guid: 46632edca4b557f429d138a58298e6dc
 TextureImporter:
   fileIDToRecycleName:
-    21300000: flushi
-    21300002: Flushi Piece
-    21300004: Flushi Leg
-    21300006: Flushi Body
+    21300000: Trash
+    21300002: Engine
+    21300004: Particle 1
+    21300006: Particle Star
+    21300008: Trash
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -47,35 +48,45 @@ TextureImporter:
   buildTargetSettings: []
   spriteSheet:
     sprites:
-    - name: Flushi Piece
+    - name: Engine
       rect:
         serializedVersion: 2
-        x: 399
-        y: 372
-        width: 78
-        height: 77
+        x: 21
+        y: 150
+        width: 170
+        height: 112
       alignment: 0
       pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: Flushi Leg
+    - name: Particle 1
       rect:
         serializedVersion: 2
-        x: 407
-        y: 276
-        width: 67
-        height: 46
+        x: 202
+        y: 197
+        width: 61
+        height: 65
       alignment: 0
       pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: Flushi Body
+    - name: Particle Star
       rect:
         serializedVersion: 2
-        x: 6
-        y: 72
-        width: 370
-        height: 430
+        x: 217
+        y: 166
+        width: 31
+        height: 28
       alignment: 0
       pivot: {x: .5, y: .5}
-      border: {x: 10, y: 12, z: 5, w: 8}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Trash
+      rect:
+        serializedVersion: 2
+        x: 47
+        y: 9
+        width: 112
+        height: 97
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
   spritePackingTag: 
   userData: 
