@@ -99,8 +99,8 @@ public abstract class AbsObjSpawner : MonoBehaviour {
     }
 	
     // Abstract methods
-    // Could be tricky redifined for specific GameObjects
     protected abstract void applyObjDestroyer(GameObject obj, float objDestroyRadius);
     protected abstract void postSpawn(GameObject obj);
     // ...
+
 }

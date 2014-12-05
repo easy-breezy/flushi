@@ -20,9 +20,9 @@ public class FlushiController : MonoBehaviour {
             AwayFromCameraObjDestroyer globDestroyer = (AwayFromCameraObjDestroyer) globClone.AddComponent(typeof(AwayFromCameraObjDestroyer));
             globDestroyer.Range = AbsObjSpawner.getCameraCircumcircleRadius() + GlobDestroyOffset;
 
-            LinearThruster globCloneLT = (LinearThruster) globClone.GetComponent(typeof(LinearThruster));
-            globCloneLT.Direction = direction;
-            globCloneLT.Velocity = ObjGlobVelocity * 5;
+            ObjMovementController globCloneMC = (ObjMovementController) globClone.GetComponent(typeof(ObjMovementController));
+            globCloneMC.Direction = direction;
+            globCloneMC.Velocity = ObjGlobVelocity * 5;
 
             gameObject.rigidbody2D.AddForce(-direction * ObjGlobVelocity);
         }

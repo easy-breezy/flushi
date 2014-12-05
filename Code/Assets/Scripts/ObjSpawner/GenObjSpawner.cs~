@@ -15,4 +15,5 @@ public class GenObjSpawner : AbsObjSpawner {
     protected override void postSpawn(GameObject obj) {
         // pass
     }
+
 }

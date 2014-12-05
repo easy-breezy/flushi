@@ -26,8 +26,7 @@ public class MeteorSpawner : GenObjSpawner {
     protected override void postSpawn(GameObject obj) {
         base.postSpawn(obj);
 
-        LinearThruster objLT = (LinearThruster) obj.GetComponent(typeof(LinearThruster));
-        AngularThruster objAT = (AngularThruster) obj.GetComponent(typeof(AngularThruster));
+        ObjMovementController objMC = (ObjMovementController) obj.GetComponent(typeof(ObjMovementController));
 
         Vector3 obj2CameraDirection = obj.transform.position - Camera.main.transform.position; 
         float objDeviationAngle = Random.Range(-MeteorDeviationAngleMax, +MeteorDeviationAngleMax);
@@ -35,11 +34,11 @@ public class MeteorSpawner : GenObjSpawner {
         Vector2 objDirection = new Vector2(obj2CameraDirection.x * Mathf.Cos(objDeviationAngle),
                                            obj2CameraDirection.y * Mathf.Sin(objDeviationAngle)).normalized;
         float objVelocity = Random.Range(MeteorVelocityMin, MeteorVelocityMax);
-        objLT.Direction = objDirection;
-        objLT.Velocity = objVelocity;
+        objMC.Direction = objDirection;
+        objMC.Velocity = objVelocity;
 
         float objTorque = Random.Range(-1, 1) * Random.Range(MeteorTorqueMin, MeteorTorqueMax);
-        objAT.Torque = objTorque;
+        objMC.Torque = objTorque;
     }
 
 }

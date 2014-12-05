@@ -13,5 +13,8 @@ public abstract class AbsObjDestroyer : MonoBehaviour {
         }
     }
 
+    // Abstract method
     protected abstract bool proc();
+    // ...
+
 }
