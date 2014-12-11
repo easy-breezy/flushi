@@ -24,7 +24,7 @@ public class FlushiController : MonoBehaviour {
             projectileCloneMC.Direction = direction;
             projectileCloneMC.Velocity = ObjProjectileVelocity * 5;
 
-            gameObject.rigidbody2D.AddForce(-direction * ObjProjectileVelocity);
+            gameObject.rigidbody2D.AddForce(-direction * 50 * ObjProjectileVelocity);
         }
     } 
 
