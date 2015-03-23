@@ -1,0 +1,23 @@
+﻿using UnityEngine;
+using System.Collections;
+
+public class DestroyableBehaviour : MonoBehaviour {
+
+    public GameObject ExplosionPrefab;
+
+    void Start() {
+        
+    }
+
+    void Update() {
+
+    }
+
+    void OnCollisionEnter2D(Collision2D col) {
+        if (col.gameObject.tag == "Projectile") {
+            GameObject explosionClone = (GameObject) Instantiate(ExplosionPrefab, gameObject.transform.position, gameObject.transform.rotation);
+            Destroy(gameObject);
+        }
+    }
+
+}
