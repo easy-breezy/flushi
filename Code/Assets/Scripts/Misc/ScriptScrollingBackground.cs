@@ -1,8 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-using UnityEngine;
-using System.Collections;
 public class ScriptScrollingBackground : MonoBehaviour {
 	public float scrollSpeed;
 	public GameObject Flushi;

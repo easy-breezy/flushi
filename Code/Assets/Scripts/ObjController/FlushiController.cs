@@ -1,17 +1,19 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class FlushiController : MonoBehaviour {
+public class FlushiController : ObjMovementController {
 
     public GameObject ProjectilePrefab;
     public float ProjectileDestroyOffset = 1f;
-    public float ObjProjectileVelocity = 10f;
+    public float ObjProjectileVelocity = 3f;
+    //important for player experience
+    public float SpeedDifferenseVelocity = 5f;
 
     void Start() {
-
+        MooveSpeedLimit = 9f;
     }
 
-    void Update() {
+    override public void Update() {
         if (Input.GetMouseButtonDown(0)) {
             Vector3 direction = (Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position).normalized;
 
@@ -22,10 +24,15 @@ public class FlushiController : MonoBehaviour {
 
             ObjMovementController projectileCloneMC = (ObjMovementController) projectileClone.GetComponent(typeof(ObjMovementController));
             projectileCloneMC.Direction = direction;
-            projectileCloneMC.Velocity = ObjProjectileVelocity * 5;
+            projectileCloneMC.Velocity = ObjProjectileVelocity;
 
-            gameObject.rigidbody2D.AddForce(-direction * 50 * ObjProjectileVelocity);
+            //Fix self-projectiles collisions
+            Physics2D.IgnoreCollision(projectileCloneMC.collider2D, this.collider2D);
+
+            //gameObject.rigidbody2D.AddForce(-direction * ObjProjectileVelocity);
+            base.Velocity = SpeedDifferenseVelocity*ObjProjectileVelocity;
+            base.Direction = -direction;
+            base.Update();
         }
-    } 
-
+    }
 }

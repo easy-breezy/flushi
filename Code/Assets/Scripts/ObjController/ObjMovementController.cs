@@ -7,13 +7,32 @@ public class ObjMovementController : MonoBehaviour {
     public float Velocity = 0f;
     public float Torque = 0f;
 
+    public float MooveSpeedLimit = 30f;
+    public float RotateSpeedLimit = 360f;
+
     void Start() {
 	
     }
 
-    void Update() {
-        gameObject.rigidbody2D.AddForce(Direction.normalized * Velocity);
-        gameObject.rigidbody2D.AddTorque(Torque);
-    }
+    virtual public void Update()
+    {
+        if (Velocity > 0)
+        {
+            gameObject.rigidbody2D.AddForce(Direction.normalized * Velocity);
 
+            if (rigidbody2D.velocity.magnitude > MooveSpeedLimit)
+                rigidbody2D.velocity = rigidbody2D.velocity.normalized * MooveSpeedLimit;
+
+            Velocity = 0;
+        }
+
+        if (Torque != 0)
+        {
+            gameObject.rigidbody2D.AddTorque(Torque);
+
+            if (Mathf.Abs(rigidbody2D.angularVelocity) > RotateSpeedLimit)
+                rigidbody2D.angularVelocity = Mathf.Sign(rigidbody2D.angularVelocity) * RotateSpeedLimit;
+            Torque = 0;
+        }
+    }
 }
