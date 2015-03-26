@@ -51,6 +51,7 @@ public class FlushiController : ObjMovementController {
             foreach (SpriteRenderer render in gameObject.GetComponentsInChildren<SpriteRenderer>())
                 render.enabled = false;
             gameObject.GetComponent<FlushiController>().enabled = false;
+            gameObject.GetComponent<CircleCollider2D>().enabled = false;
 
             GameOverText.SetActive(true);
         }
