@@ -4,17 +4,17 @@ using System.Collections;
 public class ScriptScrollingBackground : MonoBehaviour {
 	public float scrollSpeed;
 	public GameObject Flushi;
-	private Vector3 savedOffset;
+	private Vector3 _savedOffset;
 	
 	void Start () {
-		savedOffset = Flushi.transform.position;
+		_savedOffset = Flushi.transform.position;
 	}
 	
 	void FixedUpdate () {
-		Vector2 offset = new Vector2 (Mathf.Repeat (Flushi.transform.position.x*scrollSpeed, 1), Mathf.Repeat (Flushi.transform.position.y*scrollSpeed, 1));
+		var offset = new Vector2 (Mathf.Repeat (Flushi.transform.position.x*scrollSpeed, 1), Mathf.Repeat (Flushi.transform.position.y*scrollSpeed, 1));
 		renderer.sharedMaterial.SetTextureOffset ("_MainTex", offset);
-		transform.Translate( Flushi.transform.position - savedOffset);
-		savedOffset = Flushi.transform.position;
+		transform.Translate( Flushi.transform.position - _savedOffset);
+		_savedOffset = Flushi.transform.position;
 	}
 	
 	void OnDisable () {

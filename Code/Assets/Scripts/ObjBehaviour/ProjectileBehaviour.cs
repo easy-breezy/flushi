@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 public class ProjectileBehaviour : MonoBehaviour {
 
@@ -17,7 +16,7 @@ public class ProjectileBehaviour : MonoBehaviour {
     {
         if (collision.gameObject.tag == "Meteor" || collision.gameObject.tag == "Enemy")
         {
-            GameObject explosionClone = (GameObject)Instantiate(ExplosionPrefab, collision.gameObject.transform.position, collision.gameObject.transform.rotation);
+            var explosionClone = (GameObject)Instantiate(ExplosionPrefab, collision.gameObject.transform.position, collision.gameObject.transform.rotation);
             explosionClone.transform.localScale = collision.gameObject.transform.localScale * 2.5f;
             Destroy(collision.gameObject);
             Destroy(gameObject);
