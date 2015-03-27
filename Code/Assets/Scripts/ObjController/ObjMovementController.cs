@@ -1,37 +1,36 @@
 ﻿using UnityEngine;
 
-public class ObjMovementController : MonoBehaviour {
+public class ObjMovementController : MonoBehaviour
+{
+    public Vector2 Direction = new Vector2();
+    public float MooveSpeedLimit = 30f;
+    public float RotateSpeedLimit = 360f;
+    public float Torque;
+    public float Velocity;
 
-	public Vector2 Direction = new Vector2();
-	public float Velocity = 0f;
-	public float Torque = 0f;
+    private void Start()
+    {
+    }
 
-	public float MooveSpeedLimit = 30f;
-	public float RotateSpeedLimit = 360f;
+    public virtual void Update()
+    {
+        if (Velocity > 0)
+        {
+            gameObject.rigidbody2D.AddForce(Direction.normalized*Velocity);
 
-	void Start() {
-	
-	}
+            if (rigidbody2D.velocity.magnitude > MooveSpeedLimit)
+                rigidbody2D.velocity = rigidbody2D.velocity.normalized*MooveSpeedLimit;
 
-	virtual public void Update()
-	{
-		if (Velocity > 0)
-		{
-			gameObject.rigidbody2D.AddForce(Direction.normalized * Velocity);
+            Velocity = 0;
+        }
 
-			if (rigidbody2D.velocity.magnitude > MooveSpeedLimit)
-				rigidbody2D.velocity = rigidbody2D.velocity.normalized * MooveSpeedLimit;
+        if (Torque != 0)
+        {
+            gameObject.rigidbody2D.AddTorque(Torque);
 
-			Velocity = 0;
-		}
-
-		if (Torque != 0)
-		{
-			gameObject.rigidbody2D.AddTorque(Torque);
-
-			if (Mathf.Abs(rigidbody2D.angularVelocity) > RotateSpeedLimit)
-				rigidbody2D.angularVelocity = Mathf.Sign(rigidbody2D.angularVelocity) * RotateSpeedLimit;
-			Torque = 0;
-		}
-	}
+            if (Mathf.Abs(rigidbody2D.angularVelocity) > RotateSpeedLimit)
+                rigidbody2D.angularVelocity = Mathf.Sign(rigidbody2D.angularVelocity)*RotateSpeedLimit;
+            Torque = 0;
+        }
+    }
 }

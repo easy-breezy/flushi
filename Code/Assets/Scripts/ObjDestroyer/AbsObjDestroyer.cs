@@ -1,19 +1,20 @@
 ﻿using UnityEngine;
 
-public abstract class AbsObjDestroyer : MonoBehaviour {
+public abstract class AbsObjDestroyer : MonoBehaviour
+{
+    private void Start()
+    {
+        // pass
+    }
 
-	void Start() {
-		// pass
-	}
-	
-	void Update() {
-		if (Proc()) {
-			Destroy(gameObject);
-		}
-	}
+    private void Update()
+    {
+        if (Proc())
+        {
+            Destroy(gameObject);
+        }
+    }
 
-	// Abstract method
-	protected abstract bool Proc();
-	// ...
-
+    // Abstract method
+    protected abstract bool Proc();
 }

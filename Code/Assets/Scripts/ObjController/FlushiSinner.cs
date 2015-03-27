@@ -1,17 +1,18 @@
 ﻿using UnityEngine;
 
-public class FlushiSinner : MonoBehaviour {
+public class FlushiSinner : MonoBehaviour
+{
+    // Use this for initialization
+    private void Start()
+    {
+    }
 
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		var pos = Camera.main.WorldToScreenPoint(transform.position);
-		var dir = Input.mousePosition - pos;
-		var angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
-		transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
-	}
+    // Update is called once per frame
+    private void Update()
+    {
+        var pos = Camera.main.WorldToScreenPoint(transform.position);
+        var dir = Input.mousePosition - pos;
+        var angle = Mathf.Atan2(dir.y, dir.x)*Mathf.Rad2Deg;
+        transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+    }
 }
