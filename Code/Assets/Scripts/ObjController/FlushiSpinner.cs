@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class FlushiSinner : MonoBehaviour
+public class FlushiSpinner : MonoBehaviour
 {
     // Use this for initialization
     private void Start()

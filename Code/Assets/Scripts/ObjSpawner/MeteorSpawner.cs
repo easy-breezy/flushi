@@ -35,9 +35,9 @@ public class MeteorSpawner : GenObjSpawner
             obj2CameraDirection.y*Mathf.Sin(objDeviationAngle)).normalized;
         var objVelocity = Random.Range(MeteorVelocityMin, MeteorVelocityMax);
         objMc.Direction = objDirection;
-        objMc.Velocity = objVelocity;
+        objMc.ApplyVelocity(objVelocity);
 
         var objTorque = Random.Range(-1, 1)*Random.Range(MeteorTorqueMin, MeteorTorqueMax);
-        objMc.Torque = objTorque;
+        objMc.ApplyTorque(objTorque);
     }
 }

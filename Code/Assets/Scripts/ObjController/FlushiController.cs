@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 public class FlushiController : ObjMovementController
 {
@@ -12,7 +13,7 @@ public class FlushiController : ObjMovementController
 
     private void Start()
     {
-        MooveSpeedLimit = 30f;
+        MoveSpeedLimit = 30f;
     }
 
     public override void Update()
@@ -20,41 +21,49 @@ public class FlushiController : ObjMovementController
         if (Input.GetMouseButtonDown(0))
         {
             var direction = (Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position).normalized;
-
-            var projectileClone = (GameObject) Instantiate(ProjectilePrefab, transform.position, transform.rotation);
-
-            var projectileDestroyer = projectileClone.AddComponent<AwayFromCameraObjDestroyer>();
-            projectileDestroyer.Range = AbsObjSpawner.GetCameraCircumcircleRadius() + ProjectileDestroyOffset;
-
-            Velocity = ObjProjectileVelocity;
-            Direction = -direction;
-            base.Update();
-
-            var projectileCloneMc = projectileClone.GetComponent<ObjMovementController>();
-            projectileCloneMc.Direction = direction;
-            projectileCloneMc.Velocity = SpeedDifferenseVelocity*ObjProjectileVelocity +
-                                         gameObject.rigidbody2D.velocity.magnitude;
-
-            //Fix self-projectiles collisions
-            Physics2D.IgnoreCollision(projectileCloneMc.collider2D, collider2D);
+            SpawnProjectile(direction);
         }
     }
 
+    private void SpawnProjectile(Vector2 direction)
+    {
+        var projectileClone = (GameObject)Instantiate(ProjectilePrefab, transform.position, transform.rotation);
+
+        var projectileDestroyer = projectileClone.AddComponent<AwayFromCameraObjDestroyer>();
+        projectileDestroyer.Range = AbsObjSpawner.GetCameraCircumcircleRadius() + ProjectileDestroyOffset;
+
+        ApplyVelocity(ObjProjectileVelocity);
+        Direction = -direction;
+        base.Update();
+
+        var projectileCloneMc = projectileClone.GetComponent<ObjMovementController>();
+        projectileCloneMc.Direction = direction;
+        projectileCloneMc.ApplyVelocity(SpeedDifferenseVelocity * ObjProjectileVelocity +
+                                        rigidbody2D.velocity.magnitude);
+
+        //Fix self-projectiles collisions
+        Physics2D.IgnoreCollision(projectileCloneMc.collider2D, collider2D);
+    }
+    
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.tag == "Meteor" || collision.gameObject.tag == "Enemy")
+        switch (collision.gameObject.tag)
         {
-            var explosionClone =
-                (GameObject) Instantiate(ExplosionPrefab, gameObject.transform.position, gameObject.transform.rotation);
-            explosionClone.transform.localScale = collision.gameObject.transform.localScale*2f;
-            Destroy(collision.gameObject);
-
-            foreach (var render in gameObject.GetComponentsInChildren<SpriteRenderer>())
-                render.enabled = false;
-            gameObject.GetComponent<FlushiController>().enabled = false;
-            gameObject.GetComponent<CircleCollider2D>().enabled = false;
-
-            GameOverText.SetActive(true);
+            case "Meteor":
+            case "Enemy":
+                EnemyCollision(collision);
+                break;
         }
+    }
+
+    private void EnemyCollision(Collision2D collision)
+    {
+        var explosionClone =
+            (GameObject) Instantiate(ExplosionPrefab, gameObject.transform.position, gameObject.transform.rotation);
+        explosionClone.transform.localScale = collision.gameObject.transform.localScale*2f;
+        Destroy(collision.gameObject);
+        
+        GameOverText.SetActive(true);
+        Destroy(gameObject);
     }
 }
