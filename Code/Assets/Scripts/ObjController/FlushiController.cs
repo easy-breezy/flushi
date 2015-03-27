@@ -13,7 +13,6 @@ public class FlushiController : ObjMovementController {
     public float ObjProjectileVelocity = 30f;
     //important for player experience
     public float SpeedDifferenseVelocity = 5f;
-
     void Start() {
         MooveSpeedLimit = 30f;
     }
