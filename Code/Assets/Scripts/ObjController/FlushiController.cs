@@ -33,7 +33,7 @@ public class FlushiController : ObjMovementController
 
     private void SpawnProjectile(Vector2 direction)
     {
-        var projectileClone = (GameObject)Instantiate(ProjectilePrefab, transform.position, transform.rotation);
+        var projectileClone = (GameObject)Instantiate(ProjectilePrefab, transform.position + new Vector3(0,0,1), transform.rotation);
         
         //Fix self-projectiles collisions
         Physics2D.IgnoreCollision(projectileClone.collider2D, collider2D);

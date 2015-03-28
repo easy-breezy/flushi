@@ -8,7 +8,7 @@ public class ObjMovementController : MonoBehaviour
 
     public void ApplyTorque(float value)
     {
-            if (value <= 0) return;
+            //if (value == 0) value = 10f;
             gameObject.rigidbody2D.AddTorque(value);
 
             if (Mathf.Abs(rigidbody2D.angularVelocity) > RotateSpeedLimit)

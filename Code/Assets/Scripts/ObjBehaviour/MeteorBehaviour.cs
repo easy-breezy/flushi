@@ -5,6 +5,7 @@ public class MeteorBehaviour : MonoBehaviour
 {
     public GameObject FoodPrefab;
     public float FoodDestroyOffset = 1f;
+    public GameObject ExplosionPrefab;
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -21,14 +22,18 @@ public class MeteorBehaviour : MonoBehaviour
         var food = (GameObject)Instantiate(FoodPrefab, transform.position, transform.rotation);
         food.transform.localScale = transform.localScale;
 
-        //Fix self-food collisions
-        Physics2D.IgnoreCollision(food.collider2D, collider2D);
-
         var foodDestroyer = food.AddComponent<AwayFromCameraObjDestroyer>();
         foodDestroyer.Range = AbsObjSpawner.GetCameraCircumcircleRadius() + FoodDestroyOffset;
 
         var foodCloneMc = food.GetComponent<ObjMovementController>();
         foodCloneMc.Direction = gameObject.GetComponent<ObjMovementController>().Direction;
-        foodCloneMc.rigidbody2D.velocity = rigidbody2D.velocity;
+
+        var explosionClone = (GameObject) 
+            Instantiate(ExplosionPrefab, collision.gameObject.transform.position,
+            collision.gameObject.transform.rotation);
+
+        explosionClone.transform.localScale = collision.gameObject.transform.localScale * 2.5f;
+        Destroy(collision.gameObject);
+        Destroy(gameObject);
     }
 }

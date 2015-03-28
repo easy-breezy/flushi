@@ -37,7 +37,7 @@ public class MeteorSpawner : GenObjSpawner
         objMc.Direction = objDirection;
         objMc.ApplyVelocity(objVelocity);
 
-        var objTorque = Random.Range(-1, 1)*Random.Range(MeteorTorqueMin, MeteorTorqueMax);
+        var objTorque = (Random.Range(0, 2) == 0  ? 1  : -1 ) * Random.Range(MeteorTorqueMin, MeteorTorqueMax);
         objMc.ApplyTorque(objTorque);
     }
 }
