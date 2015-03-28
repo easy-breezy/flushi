@@ -19,24 +19,22 @@ public abstract class AbsObjSpawner : MonoBehaviour
 
     private void Update()
     {
-        if (Proc())
-        {
-            var objScale = GetObjScale();
+        if (!Proc()) return;
+        var objScale = GetObjScale();
 
-            var objSpawnRadius = GetObjSpawnRadius();
-            var objDestroyRadius = GetObjDestroyRadius();
+        var objSpawnRadius = GetObjSpawnRadius();
+        var objDestroyRadius = GetObjDestroyRadius();
 
-            var objPosition = GetObjPosition(objSpawnRadius);
-            var objRotation = GetObjRotation();
+        var objPosition = GetObjPosition(objSpawnRadius);
+        var objRotation = GetObjRotation();
 
-            var obj = (GameObject) Instantiate(Object, objPosition, objRotation);
-            ApplyObjScale(obj, objScale);
+        var obj = (GameObject) Instantiate(Object, objPosition, objRotation);
+        ApplyObjScale(obj, objScale);
 
-            // Abstract methods usage
-            ApplyObjDestroyer(obj, objDestroyRadius);
-            PostSpawn(obj);
-            // ...
-        }
+        // Abstract methods usage
+        ApplyObjDestroyer(obj, objDestroyRadius);
+        PostSpawn(obj);
+        // ...
     }
 
     protected virtual void CheckArgsAndState()
@@ -69,13 +67,11 @@ public abstract class AbsObjSpawner : MonoBehaviour
 
     public static float GetCameraCircumcircleRadius()
     {
-        if (CameraCircumcircleRadius == -1f)
-        {
-            var cameraHeight = Camera.main.orthographicSize;
-            var cameraWidth = cameraHeight*Camera.main.aspect;
+        if (CameraCircumcircleRadius != -1f) return CameraCircumcircleRadius;
+        var cameraHeight = Camera.main.orthographicSize;
+        var cameraWidth = cameraHeight*Camera.main.aspect;
 
-            CameraCircumcircleRadius = Mathf.Sqrt(Mathf.Pow(cameraHeight, 2f) + Mathf.Pow(cameraWidth, 2f));
-        }
+        CameraCircumcircleRadius = Mathf.Sqrt(Mathf.Pow(cameraHeight, 2f) + Mathf.Pow(cameraWidth, 2f));
 
         return CameraCircumcircleRadius;
     }
@@ -93,7 +89,7 @@ public abstract class AbsObjSpawner : MonoBehaviour
         return (GetCameraCircumcircleRadius() + ObjectSpawnOffset + ObjectDestroyOffset);
     }
 
-    protected Vector3 GetObjPosition(float objSpawnRadius)
+    protected static Vector3 GetObjPosition(float objSpawnRadius)
     {
         var angle = Random.Range(0f, 1f)*Mathf.PI*2;
 
@@ -103,12 +99,12 @@ public abstract class AbsObjSpawner : MonoBehaviour
         return new Vector3(x, y);
     }
 
-    protected Quaternion GetObjRotation()
+    protected static Quaternion GetObjRotation()
     {
         return new Quaternion();
     }
 
-    protected void ApplyObjScale(GameObject obj, float objScale)
+    protected static void ApplyObjScale(GameObject obj, float objScale)
     {
         obj.transform.localScale = new Vector3(objScale, objScale, objScale);
     }

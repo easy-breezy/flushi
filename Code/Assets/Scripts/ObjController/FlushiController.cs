@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class FlushiController : ObjMovementController
 {
@@ -9,10 +10,11 @@ public class FlushiController : ObjMovementController
     public float ProjectileDestroyOffset = 1f;
     public GameObject ProjectilePrefab;
     //important for player experience
-    public float SpeedDifferenseVelocity = 5f;
+    public float SpeedDifferenseVelocity = 1f;
 
     private void Start()
     {
+        ScoreManager.Add(100f);
         MoveSpeedLimit = 30f;
     }
 
@@ -21,6 +23,10 @@ public class FlushiController : ObjMovementController
         if (Input.GetMouseButtonDown(0))
         {
             var direction = (Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position).normalized;
+            
+            Direction = -direction;
+            ApplyVelocity(ObjProjectileVelocity);
+            
             SpawnProjectile(direction);
         }
     }
@@ -28,21 +34,18 @@ public class FlushiController : ObjMovementController
     private void SpawnProjectile(Vector2 direction)
     {
         var projectileClone = (GameObject)Instantiate(ProjectilePrefab, transform.position, transform.rotation);
+        
+        //Fix self-projectiles collisions
+        Physics2D.IgnoreCollision(projectileClone.collider2D, collider2D);
 
         var projectileDestroyer = projectileClone.AddComponent<AwayFromCameraObjDestroyer>();
         projectileDestroyer.Range = AbsObjSpawner.GetCameraCircumcircleRadius() + ProjectileDestroyOffset;
 
-        ApplyVelocity(ObjProjectileVelocity);
-        Direction = -direction;
-        base.Update();
-
         var projectileCloneMc = projectileClone.GetComponent<ObjMovementController>();
         projectileCloneMc.Direction = direction;
-        projectileCloneMc.ApplyVelocity(SpeedDifferenseVelocity * ObjProjectileVelocity +
-                                        rigidbody2D.velocity.magnitude);
-
-        //Fix self-projectiles collisions
-        Physics2D.IgnoreCollision(projectileCloneMc.collider2D, collider2D);
+        projectileCloneMc.rigidbody2D.velocity = rigidbody2D.velocity;
+        projectileCloneMc.ApplyVelocity(SpeedDifferenseVelocity * ObjProjectileVelocity);
+        ScoreManager.Subtract(1f);
     }
     
     private void OnCollisionEnter2D(Collision2D collision)
@@ -62,8 +65,9 @@ public class FlushiController : ObjMovementController
             (GameObject) Instantiate(ExplosionPrefab, gameObject.transform.position, gameObject.transform.rotation);
         explosionClone.transform.localScale = collision.gameObject.transform.localScale*2f;
         Destroy(collision.gameObject);
-        
-        GameOverText.SetActive(true);
+
         Destroy(gameObject);
+        GameOverText.GetComponent<Text>().text += "SCORE: " + ScoreManager.Score;
+        GameOverText.SetActive(true);
     }
 }
