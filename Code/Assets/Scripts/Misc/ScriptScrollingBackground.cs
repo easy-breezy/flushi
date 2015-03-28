@@ -13,6 +13,7 @@ public class ScriptScrollingBackground : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (Flushi == null) return;
         var offset = new Vector2(Mathf.Repeat(Flushi.transform.position.x*scrollSpeed, 1),
             Mathf.Repeat(Flushi.transform.position.y*scrollSpeed, 1));
         renderer.sharedMaterial.SetTextureOffset("_MainTex", offset);
