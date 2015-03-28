@@ -10,9 +10,7 @@ public abstract class AbsObjDestroyer : MonoBehaviour
     private void Update()
     {
         if (Proc())
-        {
             Destroy(gameObject);
-        }
     }
 
     // Abstract method
