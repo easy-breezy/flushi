@@ -67,7 +67,7 @@ public class FlushiController : ObjMovementController
         Destroy(collision.gameObject);
 
         Destroy(gameObject);
-        GameOverText.GetComponent<Text>().text += "SCORE: " + ScoreManager.Score;
+        //GameOverText.GetComponent<Text>().text += "SCORE: " + ScoreManager.Score;
         GameOverText.SetActive(true);
     }
 }
