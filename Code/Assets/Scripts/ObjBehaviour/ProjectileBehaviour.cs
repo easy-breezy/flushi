@@ -1,27 +1,28 @@
 ﻿using UnityEngine;
-using System.Collections;
 
-public class ProjectileBehaviour : MonoBehaviour {
-
+public class ProjectileBehaviour : MonoBehaviour
+{
     public GameObject ExplosionPrefab;
 
-    void Start() {
-
-    }
-    
-    void Update() {
-        
+    private void Start()
+    {
     }
 
-    void OnCollisionEnter2D(Collision2D collision)
+    private void Update()
+    {
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.tag == "Meteor" || collision.gameObject.tag == "Enemy")
         {
-            GameObject explosionClone = (GameObject)Instantiate(ExplosionPrefab, collision.gameObject.transform.position, collision.gameObject.transform.rotation);
-            explosionClone.transform.localScale = collision.gameObject.transform.localScale * 2.5f;
+            var explosionClone =
+                (GameObject)
+                    Instantiate(ExplosionPrefab, collision.gameObject.transform.position,
+                        collision.gameObject.transform.rotation);
+            explosionClone.transform.localScale = collision.gameObject.transform.localScale*2.5f;
             Destroy(collision.gameObject);
             Destroy(gameObject);
-        } 
+        }
     }
-
 }

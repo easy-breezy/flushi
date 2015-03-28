@@ -1,44 +1,43 @@
 ﻿using UnityEngine;
-using System.Collections;
 
-public class MeteorSpawner : GenObjSpawner {
-
+public class MeteorSpawner : GenObjSpawner
+{
     public float MeteorDeviationAngleMax = 30f;
-
-    public float MeteorVelocityMin = 10f;
-    public float MeteorVelocityMax = 40f;
-
-    public float MeteorTorqueMin = 10f;
     public float MeteorTorqueMax = 40f;
+    public float MeteorTorqueMin = 10f;
+    public float MeteorVelocityMax = 40f;
+    public float MeteorVelocityMin = 10f;
 
-    protected override void checkArgsAndState() {
-        base.checkArgsAndState();
+    protected override void CheckArgsAndState()
+    {
+        base.CheckArgsAndState();
         // I'mma too lazy to do it now...
     }
-    
-    protected override void applyObjDestroyer(GameObject obj, float objDestroyRadius) {
-        base.applyObjDestroyer(obj, objDestroyRadius);
 
-        AwayFromCameraObjDestroyer objDestroyer = (AwayFromCameraObjDestroyer) obj.AddComponent(typeof(AwayFromCameraObjDestroyer));
+    protected override void ApplyObjDestroyer(GameObject obj, float objDestroyRadius)
+    {
+        base.ApplyObjDestroyer(obj, objDestroyRadius);
+
+        var objDestroyer = (AwayFromCameraObjDestroyer) obj.AddComponent(typeof (AwayFromCameraObjDestroyer));
         objDestroyer.Range = objDestroyRadius;
     }
-    
-    protected override void postSpawn(GameObject obj) {
-        base.postSpawn(obj);
 
-        ObjMovementController objMC = (ObjMovementController) obj.GetComponent(typeof(ObjMovementController));
+    protected override void PostSpawn(GameObject obj)
+    {
+        base.PostSpawn(obj);
 
-        Vector3 obj2CameraDirection = obj.transform.position - Camera.main.transform.position; 
-        float objDeviationAngle = Random.Range(-MeteorDeviationAngleMax, +MeteorDeviationAngleMax);
+        var objMc = (ObjMovementController) obj.GetComponent(typeof (ObjMovementController));
 
-        Vector2 objDirection = new Vector2(obj2CameraDirection.x * Mathf.Cos(objDeviationAngle),
-                                           obj2CameraDirection.y * Mathf.Sin(objDeviationAngle)).normalized;
-        float objVelocity = Random.Range(MeteorVelocityMin, MeteorVelocityMax);
-        objMC.Direction = objDirection;
-        objMC.Velocity = objVelocity;
+        var obj2CameraDirection = obj.transform.position - Camera.main.transform.position;
+        var objDeviationAngle = Random.Range(-MeteorDeviationAngleMax, +MeteorDeviationAngleMax);
 
-        float objTorque = Random.Range(-1, 1) * Random.Range(MeteorTorqueMin, MeteorTorqueMax);
-        objMC.Torque = objTorque;
+        var objDirection = new Vector2(obj2CameraDirection.x*Mathf.Cos(objDeviationAngle),
+            obj2CameraDirection.y*Mathf.Sin(objDeviationAngle)).normalized;
+        var objVelocity = Random.Range(MeteorVelocityMin, MeteorVelocityMax);
+        objMc.Direction = objDirection;
+        objMc.ApplyVelocity(objVelocity);
+
+        var objTorque = Random.Range(-1, 1)*Random.Range(MeteorTorqueMin, MeteorTorqueMax);
+        objMc.ApplyTorque(objTorque);
     }
-
 }
