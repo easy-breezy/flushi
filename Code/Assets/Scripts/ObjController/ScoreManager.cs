@@ -1,29 +1,14 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿public static class ScoreManager
+{
+    public static float Score { get; private set; } 
 
-public class ScoreManager {
+    public static float Add(float value)
+    {
+        return Score += value;
+    }
 
-	public static ScoreManager instance;
-	private static float Score;
-
-	private ScoreManager() {
-		Score = 0.0f;
-	}
-
-	public static ScoreManager Instance() {
-		if (instance==null) {instance = new ScoreManager();}
-		return instance;
-	}
-
-	public float add(float num) {
-		Score +=num;
-		return Score;
-	}
-	public float subtract(float num) {
-		Score -=num;
-		return Score;
-	}
-	public float get() {
-		return Score;
-	}
+    public static float Subtract(float value)
+    {
+        return Score -= value;
+    }
 }

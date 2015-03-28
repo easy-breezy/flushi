@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class FlushiController : ObjMovementController
 {
@@ -13,6 +14,7 @@ public class FlushiController : ObjMovementController
 
     private void Start()
     {
+        ScoreManager.Add(100f);
         MoveSpeedLimit = 30f;
     }
 
@@ -43,8 +45,7 @@ public class FlushiController : ObjMovementController
         projectileCloneMc.Direction = direction;
         projectileCloneMc.rigidbody2D.velocity = rigidbody2D.velocity;
         projectileCloneMc.ApplyVelocity(SpeedDifferenseVelocity * ObjProjectileVelocity);
-
-        
+        ScoreManager.Subtract(1f);
     }
     
     private void OnCollisionEnter2D(Collision2D collision)
@@ -66,6 +67,7 @@ public class FlushiController : ObjMovementController
         Destroy(collision.gameObject);
 
         Destroy(gameObject);
+        GameOverText.GetComponent<Text>().text += "SCORE: " + ScoreManager.Score;
         GameOverText.SetActive(true);
     }
 }

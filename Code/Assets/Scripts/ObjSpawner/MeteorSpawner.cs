@@ -18,7 +18,7 @@ public class MeteorSpawner : GenObjSpawner
     {
         base.ApplyObjDestroyer(obj, objDestroyRadius);
 
-        var objDestroyer = (AwayFromCameraObjDestroyer) obj.AddComponent(typeof (AwayFromCameraObjDestroyer));
+        var objDestroyer = obj.AddComponent<AwayFromCameraObjDestroyer>();
         objDestroyer.Range = objDestroyRadius;
     }
 
@@ -26,7 +26,7 @@ public class MeteorSpawner : GenObjSpawner
     {
         base.PostSpawn(obj);
 
-        var objMc = (ObjMovementController) obj.GetComponent(typeof (ObjMovementController));
+        var objMc = obj.GetComponent<ObjMovementController>();
 
         var obj2CameraDirection = obj.transform.position - Camera.main.transform.position;
         var objDeviationAngle = Random.Range(-MeteorDeviationAngleMax, +MeteorDeviationAngleMax);
