@@ -19,6 +19,8 @@ public class MeteorBehaviour : MonoBehaviour
 
     private void GlobCollision(Collision2D collision)
     {
+        Destroy(collision.gameObject);
+      
         var food = (GameObject)Instantiate(FoodPrefab, transform.position, transform.rotation);
         food.transform.localScale = transform.localScale;
 
@@ -33,7 +35,7 @@ public class MeteorBehaviour : MonoBehaviour
             collision.gameObject.transform.rotation);
 
         explosionClone.transform.localScale = collision.gameObject.transform.localScale * 2.5f;
-        Destroy(collision.gameObject);
+
         Destroy(gameObject);
     }
 }
