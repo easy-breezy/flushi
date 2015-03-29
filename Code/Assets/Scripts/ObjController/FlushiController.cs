@@ -54,6 +54,7 @@ public class FlushiController : ObjMovementController
         {
             case "Meteor":
             case "Enemy":
+            case "Star":
                 EnemyCollision(collision);
                 break;
         }
@@ -64,9 +65,10 @@ public class FlushiController : ObjMovementController
         var explosionClone =
             (GameObject) Instantiate(ExplosionPrefab, gameObject.transform.position, gameObject.transform.rotation);
         explosionClone.transform.localScale = collision.gameObject.transform.localScale*2f;
-        Destroy(collision.gameObject);
-
+        
+        if (collision.gameObject.tag != "Star") Destroy(collision.gameObject);
         Destroy(gameObject);
+        
         //GameOverText.GetComponent<Text>().text += "SCORE: " + ScoreManager.Score;
         GameOverText.SetActive(true);
     }
