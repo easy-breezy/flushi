@@ -1,59 +1,75 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿using System.Collections;
+using UnityEngine;
+using UnityEngine.UI;
 
-public class FlushiController : ObjMovementController {
-
-    public GameObject ProjectilePrefab;
+public class FlushiController : ObjMovementController
+{
     public GameObject ExplosionPrefab;
-
     public GameObject GameOverText;
-
-    public float ProjectileDestroyOffset = 1f;
-
     public float ObjProjectileVelocity = 30f;
+    public float ProjectileDestroyOffset = 1f;
+    public GameObject ProjectilePrefab;
     //important for player experience
-    public float SpeedDifferenseVelocity = 5f;
+    public float SpeedDifferenseVelocity = 1f;
 
-    void Start() {
-        MooveSpeedLimit = 30f;
-    }
-
-    override public void Update() {
-        if (Input.GetMouseButtonDown(0)) {
-            Vector3 direction = (Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position).normalized;
-
-            GameObject projectileClone = (GameObject) Instantiate(ProjectilePrefab, transform.position, transform.rotation);
-
-            AwayFromCameraObjDestroyer projectileDestroyer = (AwayFromCameraObjDestroyer) projectileClone.AddComponent(typeof(AwayFromCameraObjDestroyer));
-            projectileDestroyer.Range = AbsObjSpawner.getCameraCircumcircleRadius() + ProjectileDestroyOffset;
-
-            base.Velocity = ObjProjectileVelocity;
-            base.Direction = -direction;
-            base.Update();
-
-            ObjMovementController projectileCloneMC = (ObjMovementController) projectileClone.GetComponent(typeof(ObjMovementController));
-            projectileCloneMC.Direction = direction;
-            projectileCloneMC.Velocity = SpeedDifferenseVelocity * ObjProjectileVelocity + gameObject.rigidbody2D.velocity.magnitude;
-
-            //Fix self-projectiles collisions
-            Physics2D.IgnoreCollision(projectileCloneMC.collider2D, this.collider2D);
-        }
-    }
-
-    void OnCollisionEnter2D(Collision2D collision)
+    private void Start()
     {
-        if (collision.gameObject.tag == "Meteor" || collision.gameObject.tag == "Enemy")
+        ScoreManager.Add(100f);
+        MoveSpeedLimit = 30f;
+    }
+
+    public override void Update()
+    {
+        if (Input.GetMouseButtonDown(0))
         {
-            GameObject explosionClone = (GameObject)Instantiate(ExplosionPrefab, gameObject.transform.position, gameObject.transform.rotation);
-            explosionClone.transform.localScale = collision.gameObject.transform.localScale * 2f;
-            Destroy(collision.gameObject);
-
-            foreach (SpriteRenderer render in gameObject.GetComponentsInChildren<SpriteRenderer>())
-                render.enabled = false;
-            gameObject.GetComponent<FlushiController>().enabled = false;
-            gameObject.GetComponent<CircleCollider2D>().enabled = false;
-
-            GameOverText.SetActive(true);
+            var direction = (Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position).normalized;
+            
+            Direction = -direction;
+            ApplyVelocity(ObjProjectileVelocity);
+            
+            SpawnProjectile(direction);
         }
+    }
+
+    private void SpawnProjectile(Vector2 direction)
+    {
+        var projectileClone = (GameObject)Instantiate(ProjectilePrefab, transform.position + new Vector3(0,0,1), transform.rotation);
+        
+        //Fix self-projectiles collisions
+        Physics2D.IgnoreCollision(projectileClone.collider2D, collider2D);
+
+        var projectileDestroyer = projectileClone.AddComponent<AwayFromCameraObjDestroyer>();
+        projectileDestroyer.Range = AbsObjSpawner.GetCameraCircumcircleRadius() + ProjectileDestroyOffset;
+
+        var projectileCloneMc = projectileClone.GetComponent<ObjMovementController>();
+        projectileCloneMc.Direction = direction;
+        projectileCloneMc.rigidbody2D.velocity = rigidbody2D.velocity;
+        projectileCloneMc.ApplyVelocity(SpeedDifferenseVelocity * ObjProjectileVelocity);
+        ScoreManager.Subtract(1f);
+    }
+    
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        switch (collision.gameObject.tag)
+        {
+            case "Meteor":
+            case "Enemy":
+            case "Star":
+                EnemyCollision(collision);
+                break;
+        }
+    }
+
+    private void EnemyCollision(Collision2D collision)
+    {
+        var explosionClone =
+            (GameObject) Instantiate(ExplosionPrefab, gameObject.transform.position, gameObject.transform.rotation);
+        explosionClone.transform.localScale = collision.gameObject.transform.localScale*2f;
+        
+        if (collision.gameObject.tag != "Star") Destroy(collision.gameObject);
+        Destroy(gameObject);
+        
+        //GameOverText.GetComponent<Text>().text += "SCORE: " + ScoreManager.Score;
+        GameOverText.SetActive(true);
     }
 }
