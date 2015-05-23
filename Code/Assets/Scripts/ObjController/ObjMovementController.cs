@@ -9,19 +9,19 @@ public class ObjMovementController : MonoBehaviour
     public void ApplyTorque(float value)
     {
             //if (value == 0) value = 10f;
-            gameObject.rigidbody2D.AddTorque(value);
+            gameObject.GetComponent<Rigidbody2D>().AddTorque(value);
 
-            if (Mathf.Abs(rigidbody2D.angularVelocity) > RotateSpeedLimit)
-                rigidbody2D.angularVelocity = Mathf.Sign(rigidbody2D.angularVelocity) * RotateSpeedLimit;
+            if (Mathf.Abs(GetComponent<Rigidbody2D>().angularVelocity) > RotateSpeedLimit)
+                GetComponent<Rigidbody2D>().angularVelocity = Mathf.Sign(GetComponent<Rigidbody2D>().angularVelocity) * RotateSpeedLimit;
     }
 
     public void ApplyVelocity(float value)
     {
             if (value <= 0) return;
-            gameObject.rigidbody2D.AddForce(Direction.normalized * value);
+            gameObject.GetComponent<Rigidbody2D>().AddForce(Direction.normalized * value);
 
-            if (rigidbody2D.velocity.magnitude > MoveSpeedLimit)
-                rigidbody2D.velocity = rigidbody2D.velocity.normalized * MoveSpeedLimit;
+            if (GetComponent<Rigidbody2D>().velocity.magnitude > MoveSpeedLimit)
+                GetComponent<Rigidbody2D>().velocity = GetComponent<Rigidbody2D>().velocity.normalized * MoveSpeedLimit;
     }
 
     private void Start()

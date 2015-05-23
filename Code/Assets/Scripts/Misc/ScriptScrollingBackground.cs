@@ -16,13 +16,13 @@ public class ScriptScrollingBackground : MonoBehaviour
         if (Flushi == null) return;
         var offset = new Vector2(Mathf.Repeat(Flushi.transform.position.x*scrollSpeed, 1),
             Mathf.Repeat(Flushi.transform.position.y*scrollSpeed, 1));
-        renderer.sharedMaterial.SetTextureOffset("_MainTex", offset);
+        GetComponent<Renderer>().sharedMaterial.SetTextureOffset("_MainTex", offset);
         transform.Translate(Flushi.transform.position - _savedOffset);
         _savedOffset = Flushi.transform.position;
     }
 
     private void OnDisable()
     {
-        renderer.sharedMaterial.SetTextureOffset("_MainTex", new Vector2());
+        GetComponent<Renderer>().sharedMaterial.SetTextureOffset("_MainTex", new Vector2());
     }
 }
