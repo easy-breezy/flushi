@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class PrefubSpawner : GenObjSpawner
+public class PrefubSpawner : ObjectSpawner
 {
     public float DeviationAngleMax = 30f;
     public float TorqueMax = 40f;
@@ -16,16 +16,12 @@ public class PrefubSpawner : GenObjSpawner
 
     protected override void ApplyObjDestroyer(GameObject obj, float objDestroyRadius)
     {
-        base.ApplyObjDestroyer(obj, objDestroyRadius);
-
         var objDestroyer = obj.AddComponent<AwayFromCameraObjDestroyer>();
         objDestroyer.Range = objDestroyRadius;
     }
 
     protected override void PostSpawn(GameObject obj)
     {
-        base.PostSpawn(obj);
-
         var objMc = obj.GetComponent<ObjMovementController>();
 
         if (objMc)

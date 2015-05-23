@@ -39,7 +39,7 @@ public class FlushiController : ObjMovementController
         Physics2D.IgnoreCollision(projectileClone.GetComponent<Collider2D>(), GetComponent<Collider2D>());
 
         var projectileDestroyer = projectileClone.AddComponent<AwayFromCameraObjDestroyer>();
-        projectileDestroyer.Range = AbsObjSpawner.GetCameraCircumcircleRadius() + ProjectileDestroyOffset;
+        projectileDestroyer.Range = ObjectSpawner.GetCameraCircumcircleRadius() + ProjectileDestroyOffset;
 
         var projectileCloneMc = projectileClone.GetComponent<ObjMovementController>();
         projectileCloneMc.Direction = direction;

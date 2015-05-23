@@ -1,10 +1,8 @@
 ﻿using UnityEngine;
 
-public abstract class AbsObjSpawner : MonoBehaviour
+public abstract class ObjectSpawner : MonoBehaviour
 {
-    // Static declarations
     protected static float CameraCircumcircleRadius = -1f;
-    // Public UnityEditor-resettable values
     public GameObject Object;
     public float ObjectDestroyOffset = 1f;
     public float ObjectScaleMax = 1f;
@@ -76,9 +74,6 @@ public abstract class AbsObjSpawner : MonoBehaviour
         return CameraCircumcircleRadius;
     }
 
-    // ...
-
-
     protected float GetObjSpawnRadius()
     {
         return (GetCameraCircumcircleRadius() + ObjectSpawnOffset);
@@ -109,7 +104,6 @@ public abstract class AbsObjSpawner : MonoBehaviour
         obj.transform.localScale = new Vector3(objScale, objScale, objScale);
     }
 
-    // Abstract methods
     protected abstract void ApplyObjDestroyer(GameObject obj, float objDestroyRadius);
     protected abstract void PostSpawn(GameObject obj);
 }

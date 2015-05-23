@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class AwayFromCameraObjDestroyer : AbsObjDestroyer
+public class AwayFromCameraObjDestroyer : ObjectDestroyer
 {
     public float Range;
 

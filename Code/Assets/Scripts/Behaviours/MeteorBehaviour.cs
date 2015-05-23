@@ -25,7 +25,7 @@ public class MeteorBehaviour : MonoBehaviour
         food.transform.localScale = transform.localScale;
 
         var foodDestroyer = food.AddComponent<AwayFromCameraObjDestroyer>();
-        foodDestroyer.Range = AbsObjSpawner.GetCameraCircumcircleRadius() + FoodDestroyOffset;
+        foodDestroyer.Range = ObjectSpawner.GetCameraCircumcircleRadius() + FoodDestroyOffset;
 
         var foodCloneMc = food.GetComponent<ObjMovementController>();
         foodCloneMc.Direction = gameObject.GetComponent<ObjMovementController>().Direction;
