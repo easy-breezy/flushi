@@ -11,4 +11,9 @@
     {
         return Score -= value;
     }
+
+    public static void SetNew()
+    {
+        Score = 0;
+    }
 }

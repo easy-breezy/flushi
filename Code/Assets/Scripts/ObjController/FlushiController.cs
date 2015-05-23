@@ -36,14 +36,14 @@ public class FlushiController : ObjMovementController
         var projectileClone = (GameObject)Instantiate(ProjectilePrefab, transform.position + new Vector3(0,0,1), transform.rotation);
         
         //Fix self-projectiles collisions
-        Physics2D.IgnoreCollision(projectileClone.collider2D, collider2D);
+        Physics2D.IgnoreCollision(projectileClone.GetComponent<Collider2D>(), GetComponent<Collider2D>());
 
         var projectileDestroyer = projectileClone.AddComponent<AwayFromCameraObjDestroyer>();
         projectileDestroyer.Range = AbsObjSpawner.GetCameraCircumcircleRadius() + ProjectileDestroyOffset;
 
         var projectileCloneMc = projectileClone.GetComponent<ObjMovementController>();
         projectileCloneMc.Direction = direction;
-        projectileCloneMc.rigidbody2D.velocity = rigidbody2D.velocity;
+        projectileCloneMc.GetComponent<Rigidbody2D>().velocity = GetComponent<Rigidbody2D>().velocity;
         projectileCloneMc.ApplyVelocity(SpeedDifferenseVelocity * ObjProjectileVelocity);
         ScoreManager.Subtract(1f);
     }
